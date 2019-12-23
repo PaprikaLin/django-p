@@ -9,3 +9,4 @@ Desktop.ini
 *.egg-info
 dist
 build
+django-env/
