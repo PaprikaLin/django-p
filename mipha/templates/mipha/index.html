@@ -1,0 +1,10 @@
+<ul>
+    {% for post in posts %}
+    <li>
+        <a href="{{ post.slug }}">{{ post }}</a><span> -- {{ post.author }}</span>
+        <hr>
+        <p>{{ post.body }}</p>
+        <hr>
+    </li>
+    {% endfor %}
+</ul>

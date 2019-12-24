@@ -10,5 +10,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index')
+    path('', views.index, name='index'),
+    # 定义访问不同的地址返回不同的模板，
+    path('<str:author>/', views.author_poets, name='author_poets')
 ]
