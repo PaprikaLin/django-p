@@ -38,11 +38,8 @@ def author_poets(request, author):
     return render(request, 'mipha/author_filter.html', context)
 
 
-def poets(request, poet):
-    poet = get_object_or_404(Post, title=poet)
+def poets(request, author, slug):
+    poet = get_object_or_404(Post, author=author, slug=slug)
     return render(request, 'mipha/poet.html', {'poet': poet})
 
 
-def jquery(request):
-    with open('templates/mipha/jquery.js', 'r') as f:
-        return HttpResponse(f.read())

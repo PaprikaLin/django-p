@@ -12,8 +12,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     # 定义访问不同的地址返回不同的模板，
-    path('author/<str:author>', views.author_poets, name='author_poets'),
+    path('<str:author>', views.author_poets, name='author_poets'),
     # re_path(r'^author/(\w+)$', views.author_poets, name='author_poets')
-    path('poet/<str:poet>', views.poets, name='poet'),
-    path('jquery/', views.jquery, name='jq')
+    path('<str:author>/<int:slug>', views.poets, name='poet'),
 ]

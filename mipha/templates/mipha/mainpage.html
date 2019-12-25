@@ -1,38 +1,80 @@
-{% extends 'mipha/base.html' %}
+{% extends 'base.html' %}
 
+{% block link %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'mipha/css/mainpage.css' %}">
+<script type="text/javascript" src="{% static 'mipha/js/mainpage.js' %}"></script>
+{% endblock %}
 
 {% block title %} 
     Paprika's blog 
 {% endblock %}
 
-{% block headmessage %} <h2>文章列表</h2> {% endblock %}
-
 {% block content %} 
-<div id="main">
-    <ul>
-        {% for post in posts %}
-        <li>
-            <a href="{{ post.slug }}">{{ post }}</a><span> -- {{ post.author }}</span>
-            <hr>
-            <p>{{ post.body|linebreaksbr }}</p>
-            <hr>
-        </li>
-        {% endfor %}
-    </ul>
+<div class="row">
+    <!-- 左侧边栏 -->
+    <div class="col-sm-1 col-md-1">
+        <div class="panel panel-default">
+            <div class="panel panel-heading">
+                <h3> MENU </h3>
+            </div>
+            <div class="panel panel-body">
+                <div class="list-group">
+                    <a href="/" class="list-group-item">HOME</a>
+                    <a href="www.jandan.net" class="list-group-item">煎蛋网</a>
+                    <a href="www.baidu.com" class="list-group-item">百度网</a>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- 中间内容 -->
+    <div class="col-sm-2 col-md-2">
+        tessalkjlfka
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="panel panel-default">
+            <div class="panel panel-heading">
+            {% block headmessage %} <h3>文章列表</h3> {% endblock %}
+            </div>
+            <div class="panel panel-body">
+                <ul class="post-list">
+                    {% for post in posts %}
+                    <li><a href="/{{ post.author}}/{{ post.slug }}">{{ post.title }}</a></li>
+                    <hr>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- ajax填充诗歌原文 -->
+    <div class="col-sm-2 col-md-2">
+        <div class="panel panel-default">
+            <div class="panel panel-heading">
+                <div id="ajaxhead">
 
-<style>
-    .para {
-        text-align: center;
-    }
-    ul {
-        list-style-type:none;
-    }
-    </style>
-    
-<script>
-    console.log('asdf')
-    $('li').addClass('para')
-</script>
+                </div>
+            </div>
+            <div class="panel panel-body">
+                <div id="ajaxbody">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 右侧边栏 -->
+    <div class="col-sm-1 col-md-1">
+        <div class="panel panel-default">
+            <div class="panel panel-heading">
+                <h3> 侧边栏heading </h3>
+            </div>
+            <div class="panel panel-body">
+                <div class="list-group">
+                    <a href="/" class="list-group-item">侧边栏1st</a>
+                    <a href="www.jandan.net" class="list-group-item">侧边栏2nd</a>
+                    <a href="www.baidu.com" class="list-group-item">侧边栏3rd</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
