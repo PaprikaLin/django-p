@@ -1,0 +1,38 @@
+{% extends 'mipha/base.html' %}
+
+
+{% block title %} 
+    Paprika's blog 
+{% endblock %}
+
+{% block headmessage %} <h2>文章列表</h2> {% endblock %}
+
+{% block content %} 
+<div id="main">
+    <ul>
+        {% for post in posts %}
+        <li>
+            <a href="{{ post.slug }}">{{ post }}</a><span> -- {{ post.author }}</span>
+            <hr>
+            <p>{{ post.body|linebreaksbr }}</p>
+            <hr>
+        </li>
+        {% endfor %}
+    </ul>
+    </div>
+
+<style>
+    .para {
+        text-align: center;
+    }
+    ul {
+        list-style-type:none;
+    }
+    </style>
+    
+<script>
+    console.log('asdf')
+    $('li').addClass('para')
+</script>
+{% endblock %}
+

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 # Create your views here.
 from .models import Post
 from django.template import loader
@@ -22,7 +22,8 @@ def index(request):
     '''
 
     # render函数 (request, 模板路径 templates/mipha/index.html, 要传递的参数)
-    return render(request, 'mipha/index.html', context)
+    # return render(request, 'mipha/index.html', context)
+    return render(request, 'mipha/mainpage.html', context)
 
 
 # 定义链接应该返回的数据
@@ -31,7 +32,17 @@ def index(request):
 #   2. 逻辑判断或者其他需要的事情
 #   3. 渲染模板，并且传递参数（目前看来是以字典的键与HTML里面的 {{ }}对应）
 def author_poets(request, author):
-    #poets = Post.objects.filter(author=author)
-    poets = get_object_or_404(Post, author=author)
+    poets = Post.objects.filter(author=author)
+    # poets = get_object_or_404(Post, author=author) get方法只能返回一个对象，多个对象不适用
     context = {'author': author, 'poets': poets}
     return render(request, 'mipha/author_filter.html', context)
+
+
+def poets(request, poet):
+    poet = get_object_or_404(Post, title=poet)
+    return render(request, 'mipha/poet.html', {'poet': poet})
+
+
+def jquery(request):
+    with open('templates/mipha/jquery.js', 'r') as f:
+        return HttpResponse(f.read())

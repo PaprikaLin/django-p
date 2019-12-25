@@ -1,8 +1,15 @@
-
+<h1>{{ author }}</h1>
 
 <body>
     {% if poets %}
-
-    <p>{{ poets }}</p>
+    <ul>
+        {% for poet in poets %}
+        <li>
+            <a href=''>{{ poet }} -- {{ poet.author }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Oops. nothing here.</p>
     {% endif %}
 </body>
