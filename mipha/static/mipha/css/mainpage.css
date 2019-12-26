@@ -3,3 +3,12 @@ ul {
     list-style-type:none;
     text-align: center;
 }
+#comment {
+    height: 200px;
+    width: 100%;
+}
+.formlabel {
+    width: 160px;
+    height: 30px;
+    vertical-align: middle;
+}

@@ -18,6 +18,7 @@ from django.urls import path, include
 from mipha import views
 
 urlpatterns = [
+    #path('admin', admin.site.urls),
     path('admin/', admin.site.urls),
     #path('mipha/', include('mipha.urls'))
     # 这里include了mipha.urls那么所有mipha/urls.py里面定义的路径，都要以这个为前缀

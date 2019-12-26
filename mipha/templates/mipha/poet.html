@@ -1,2 +1,4 @@
+{% load markdown_deux_tags %}
+
 {{ poet }}
-<pre>{{ poet.body }}</pre>
+<pre>{{ poet.body | markdown }}</pre>
