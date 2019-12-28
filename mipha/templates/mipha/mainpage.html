@@ -34,7 +34,7 @@
     <div class="col-sm-6 col-md-6">
         {% block headmessage %} <h3>文章列表</h3> {% endblock %}
         <div class="panel panel-default">
-            {% for post in posts %}
+            {% for post in post_list %}
             <div class="panel panel-heading post-title">
                 <!-- <a href="{{ post.author }}/{{ post.slug }}">{{ post.title }}</a> -->
                 <a href="{% url 'mipha:poet_page' post.author post.slug %}">{{ post.title }}</a>
