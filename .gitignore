@@ -10,3 +10,6 @@ Desktop.ini
 dist
 build
 django-env/
+[Command Line]
+*.log
+uwsgi_params
