@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load markdown_deux_tags %}
 {% block link %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'mipha/css/mainpage.css' %}">
@@ -44,7 +43,7 @@
                     <li><a href="/{{ post.author}}/{{ post.slug }}">{{ post.title }}</a></li>
                     <hr>
                 </ul> -->
-                {{ post.body | truncatechars:40 | markdown}}
+                {{ post.body | truncatechars:40}}
             </div>
             {% endfor %}
         </div>
@@ -52,8 +51,8 @@
         <p>
             <textarea id='comment'></textarea>
         </p>
-        {% if error_message %}<div class="errormessage">{{ error_message }}</div>{% endif %}
-        <form action="/form/" method="POST">
+	<form action="/form/" method="POST">
+		{% if error_message %}<div class="errormessage">{{ error_message }}</div>{% endif %}
             {% csrf_token %}
             <div>
                 <label class="formlabel poet_title">poet_title</label>
