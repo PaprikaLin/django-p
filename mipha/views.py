@@ -26,12 +26,12 @@ def index(request):
     return render(request, 'mipha/mainpage.html', context)
 '''
 
+
 class IndexView(generic.ListView):
     model = Post
     # 继承自ListView, 所以自动生成的变量是  post_list
     # 如果需要修改，通过 context_object_name 属性
     template_name = 'mipha/mainpage.html'
-
 
     def get_queryset(self):
         # 应该是用来读取数据库的函数
@@ -87,20 +87,18 @@ class PoetView(generic.DetailView):
     #     return context
 
     def get_queryset(self):
-        print('queryset   ',self.kwargs)
-        return Post.objects.filter(author=self.kwargs['author'], slug=self.kwargs['slug'])
+        print('queryset   ', self.kwargs)
+        return Post.objects.filter(
+            author=self.kwargs['author'],
+            slug=self.kwargs['slug'])
+
 
 def formtest(request):
-<<<<<<< HEAD
-    '''try:
-        # 如果值为空就报错
-=======
     try:
          # 如果值为空就报错
->>>>>>> temp
         poet_title = request.POST['title']
         poet_author = request.POST['author']
-       	poet_body = request.POST['body']
+        poet_body = request.POST['body']
     except KeyError:
         # 错误信息，返回提交页面，并且输出一个错误信息
         return render(request, 'mipha/mainpage.html', {
@@ -115,18 +113,19 @@ def formtest(request):
             return render(request, 'mipha/mainpage.html', {
                 'error_message': '这是一个错误信息：这首诗已存在'
             })
-        Post.objects.create(title=poet_title, slug=the_slug, author=poet_author, body=poet_body)
+        Post.objects.create(
+            title=poet_title,
+            slug=the_slug,
+            author=poet_author,
+            body=poet_body)
         # reverse 相当于通过模板名称倒推出对应的路径，比如说/form/对应formtest模板
         # 那么reverse('mipha:formtest')就会返回/form/
 
-        # 重定向，提交数据要用重定向，防止后退之后重新提交表单'''
-<<<<<<< HEAD
-    return HttpResponseRedirect(reverse('mipha:author_poets', args=('李白',)))
-=======
-    return HttpResponseRedirect(reverse('mipha:author_poets', args=(poet_author,)))
->>>>>>> temp
+        # 重定向，提交数据要用重定向，防止后退之后重新提交表单
 
-
-
-
-
+    return HttpResponseRedirect(
+        reverse(
+            'mipha:author_poets',
+            args=(
+                poet_author,
+            )))
