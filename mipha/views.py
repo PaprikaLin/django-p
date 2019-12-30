@@ -92,7 +92,7 @@ class PoetView(generic.DetailView):
 
 
 def formtest(request):
-    try:
+    '''try:
         # 如果值为空就报错
         poet_title = request.POST['title']
         poet_author = request.POST['author']
@@ -105,7 +105,9 @@ def formtest(request):
     else:
         # 操作数据库，增加数据
         the_slug = Post.objects.filter(author=poet_author).count()
-        if Post.objects.get(title=poet_title):
+        try:
+            a = Post.objects.filter(title=poet_title)
+        except Post.DoseNotExsit:
             return render(request, 'mipha/mainpage.html', {
                 'error_message': '这是一个错误信息：这首诗已存在'
             })
@@ -113,8 +115,8 @@ def formtest(request):
         # reverse 相当于通过模板名称倒推出对应的路径，比如说/form/对应formtest模板
         # 那么reverse('mipha:formtest')就会返回/form/
 
-        # 重定向，提交数据要用重定向，防止后退之后重新提交表单
-        return HttpResponseRedirect(reverse('mipha:author_poets', args=('李白',)))
+        # 重定向，提交数据要用重定向，防止后退之后重新提交表单'''
+    return HttpResponseRedirect(reverse('mipha:author_poets', args=('李白',)))
 
 
 
