@@ -90,13 +90,17 @@ class PoetView(generic.DetailView):
         print('queryset   ',self.kwargs)
         return Post.objects.filter(author=self.kwargs['author'], slug=self.kwargs['slug'])
 
-
 def formtest(request):
+<<<<<<< HEAD
     '''try:
         # 如果值为空就报错
+=======
+    try:
+         # 如果值为空就报错
+>>>>>>> temp
         poet_title = request.POST['title']
         poet_author = request.POST['author']
-        poet_body = request.POST['body']
+       	poet_body = request.POST['body']
     except KeyError:
         # 错误信息，返回提交页面，并且输出一个错误信息
         return render(request, 'mipha/mainpage.html', {
@@ -116,7 +120,11 @@ def formtest(request):
         # 那么reverse('mipha:formtest')就会返回/form/
 
         # 重定向，提交数据要用重定向，防止后退之后重新提交表单'''
+<<<<<<< HEAD
     return HttpResponseRedirect(reverse('mipha:author_poets', args=('李白',)))
+=======
+    return HttpResponseRedirect(reverse('mipha:author_poets', args=(poet_author,)))
+>>>>>>> temp
 
 
 

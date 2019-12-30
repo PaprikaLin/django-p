@@ -1,5 +1,11 @@
+#!/usr/bin/env python 
+# -*- coding: utf-8 -*- 
+# @Time : 2019/12/22 2:16 
+# @Author : Paprika
+# @File : urls.py 
+# @Software: PyChar
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.utils import timezone
 # Create your models here.
 
