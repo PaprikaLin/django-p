@@ -25,7 +25,8 @@ SECRET_KEY = 't97gd4p5n-dbst!!9s%6@%qga&(_sd-$0=vawx61q!qm+wle6)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['104.194.68.59']
+ALLOWED_HOSTS = [#'104.194.68.59',
+        'www.paprika0214.icu','paprika0214.icu']
 
 
 # Application definition
