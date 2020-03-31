@@ -1,103 +1,111 @@
-{% extends 'base.html' %}
-{% block link %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'mipha/css/mainpage.css' %}">
-<script type="text/javascript" src="{% static 'mipha/js/mainpage.js' %}"></script>
-{% endblock %}
+{% extends 'base_template.html' %}
+{% load markdown_deux_tags %}
+    {% block content %}
+    <!-- 内容 -->
+    <div class="container">
 
-{% block title %} 
-    Paprika's blog 
-{% endblock %}
-
-{% block content %} 
-<div class="row">
-    <!-- 左侧边栏 -->
-    <div class="col-sm-1 col-md-1">
-        <div class="panel panel-default">
-            <div class="panel panel-heading">
-                <h3> MENU </h3>
-            </div>
-            <div class="panel panel-body">
-                <div class="list-group">
-                    <a href="/" class="list-group-item">HOME</a>
-                    <a href="www.jandan.net" class="list-group-item">煎蛋网</a>
-                    <a href="www.baidu.com" class="list-group-item">百度网</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 中间内容 -->
-    <div class="col-sm-2 col-md-2">
-        tessalkjlfka
-    </div>
-    <div class="col-sm-6 col-md-6">
-        {% block headmessage %} <h3>文章列表</h3> {% endblock %}
-        <div class="panel panel-default">
+      <div class="row">
+        <div class="col-sm">
+            <!-- <div class="alert alert-secondary" role="alert">
+                This is a primary alert—check it out! - {{ message }}
+              </div> -->
+            <ol class="list-group">
             {% for post in post_list %}
-            <div class="panel panel-heading post-title">
-                <!-- <a href="{{ post.author }}/{{ post.slug }}">{{ post.title }}</a> -->
-                <a href="{% url 'mipha:poet_page' post.author post.slug %}">{{ post.title }}</a>
-            </div>
-            <div class="panel panel-body">
-                <!-- <ul class="post-list">
-                    <li><a href="/{{ post.author}}/{{ post.slug }}">{{ post.title }}</a></li>
-                    <hr>
-                </ul> -->
-                {{ post.body | truncatechars:40}}
-            </div>
+                <li class="list-group-item title">
+                    <!-- <a href="/post/{{ post.pub_date | date:'Y' }}/{{ post.pub_date | date:'m' }}/{{ post.pub_date | date:'d' }}/{{ post.title }}"></a> -->
+                    <div class="content">
+                        <div class="row">
+                            <div class="author">
+                                <span>{{ post.author }}</span>
+                                <br>
+                                <span class="date">{{ post.pub_date | date:"Y年m月d日"}}</span>
+                            </div>
+                            <div class="text">
+                                <span class="textright">
+                                    <a href="p/{{ post.id }}">{{ post.id }}</a>
+                                </span>
+                                {{ post.body | markdown}}
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
             {% endfor %}
-        </div>
-        <!-- 提交表单 -->
-        <p>
-            <textarea id='comment'></textarea>
-        </p>
-	<form action="/form/" method="POST">
-		{% if error_message %}<div class="errormessage">{{ error_message }}</div>{% endif %}
-            {% csrf_token %}
-            <div>
-                <label class="formlabel poet_title">poet_title</label>
-                <input class="poet_title" type="text" name="title" required>
-            </div>
-            <div>            
-                <label class="formlabel poet_author">poet_author</label>
-                <input class="poet_author" type="text" name="author" required> 
-            </div>
-            <div>
-                <label class="formlabel poet_body">poet_body</label>
-                <textarea class="poet_body" rows="15" cols="50" name="body" required></textarea>
-            </div>
-            <input type="submit">
-        </form>
-    </div>
-    <!-- ajax填充诗歌原文 -->
-    <div class="col-sm-2 col-md-2">
-        <div class="panel panel-default">
-            <div class="panel panel-heading">
-                <div id="ajaxhead">
+            </ol>
 
-                </div>
-            </div>
-            <div class="panel panel-body">
-                <div id="ajaxbody">
+            <!-- 分页 -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if post_list.has_previous %}
+                <li class="page-item">
+                <a href="/page/{{ post_list.previous_page_number }}" aria-label="Previous" class="page-link">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                </li>
+                <li class="page-item">
+                    <a href="/page/{{ post_list.previous_page_number }}" class="page-link">{{ post_list.previous_page_number }}</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                <a href="#" aria-label="Previous" class="page-link">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                </li>
+                {% endif %}
 
+
+                <li class="page-item active"><a href="#" class="page-link">{{ post_list.number }}</a></li>
+
+
+                {% if post_list.has_next %}
+                <li class="page-item">
+                    <a href="/page/{{ post_list.next_page_number }}" class="page-link">{{ post_list.next_page_number }}</a>
+                </li>
+                <li class="page-item">
+                <a href="/page/{{ post_list.next_page_number }}" aria-label="Previous" class="page-link">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                <a href="#" aria-label="Previous" class="page-link">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+            
+            <hr>
+            <div class="commentheader">
+                <h3>发表评论</h3>
+            </div>
+
+            <form action="/form/" id="commentform" method="post">
+                {% if error_message %}<div class="errormessage">{{ error_message }}</div>{% endif %}
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="author" class="col-sm-2 col-form-label">用户名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="authorinput" name="author" placeholder="输入用户名" required>
+                    </div>
                 </div>
-            </div>
-        </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">邮箱</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="emailinput" name="email" placeholder="输入邮箱" required>
+                </div>
+                <div class="input-group">
+                    <textarea class="form-control" aria-label="With textarea" name="body" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-secondary btn-lg btn-block" id="submit">提交</button>
+            </form>
+
+      </div>
     </div>
-    <!-- 右侧边栏 -->
-    <div class="col-sm-1 col-md-1">
-        <div class="panel panel-default">
-            <div class="panel panel-heading">
-                <h3> 侧边栏heading </h3>
-            </div>
-            <div class="panel panel-body">
-                <div class="list-group">
-                    <a href="/" class="list-group-item">侧边栏1st</a>
-                    <a href="www.jandan.net" class="list-group-item">侧边栏2nd</a>
-                    <a href="www.baidu.com" class="list-group-item">侧边栏3rd</a>
-            </div>
-        </div>
-    </div>
-</div>
+
+      
+    
+
+
 {% endblock %}
-

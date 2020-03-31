@@ -1,0 +1,30 @@
+{% extends 'base_template.html' %}
+{% load markdown_deux_tags %}
+    {% block content %}
+    <!-- 内容 -->
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md">
+            <ol class="list-group">
+            {% for post in post_list %}
+                <li class="list-group-item title">
+                    <span class="date">{{ post.pub_date | date:"Y年m月d日"}}</span>
+                    <a href="/post/{{ post.pub_date | date:'Y' }}/{{ post.pub_date | date:'m' }}/{{ post.pub_date | date:'d' }}/{{ post.title }}">{{ post }}</a>
+                    <div class="content">
+                        <div class="row">
+                            <div class="author">
+                                作者
+                            </div>
+                            <div class="text">
+                                {{ post.body | markdown}}
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+            {% endfor %}
+            </ol>
+        </div>
+      </div>
+      {% endblock %}

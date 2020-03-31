@@ -1,0 +1,30 @@
+.navbar-brand img {
+    height: 40px;
+}
+
+.navbar {
+    background-color: rgb(103, 136, 152);
+}
+body {
+    padding-top: 170px;
+}
+
+.navbar>.container-fluid .navbar-brand {
+    padding: 5px;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: white;
+}
+.navbar-default .navbar-nav>li>a:hover {
+    color: #fff;
+    background-color: rgb(103, 136, 152);
+}
+
+.postlist li {
+    background-color: black;
+}
+
+span.date {
+    color: blue;
+}

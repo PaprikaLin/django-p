@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block link %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'mipha/css/mainpage.css' %}">
+<script type="text/javascript" src="{% static 'mipha/js/mainpage.js' %}"></script>
+{% endblock %}
+
+{% block title %} 
+    Paprika's blog 
+{% endblock %}
+
+{% block content %} 
+<div class="row">
+    <!-- 左侧边栏 -->
+    <div class="col-sm-1 col-md-1">
+        <div class="panel panel-default">
+            <div class="panel panel-heading">
+                <h3> MENU </h3>
+            </div>
+            <div class="panel panel-body">
+                <div class="list-group">
+                    <a href="/" class="list-group-item">HOME</a>
+                    <a href="www.jandan.net" class="list-group-item">煎蛋网</a>
+                    <a href="www.baidu.com" class="list-group-item">百度网</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 中间内容 -->
+    <div class="col-sm-2 col-md-2">
+        tessalkjlfka
+    </div>
+    <div class="col-sm-6 col-md-6">
+        {% block headmessage %} <h3>文章列表</h3> {% endblock %}
+        <div class="panel panel-default">
+            {% for post in post_list %}
+            <div class="panel panel-heading post-title">
+                <!-- <a href="{{ post.author }}/{{ post.slug }}">{{ post.title }}</a> -->
+                <a href="{% url 'mipha:poet_page' post.author post.slug %}">{{ post.title }}</a>
+            </div>
+            <div class="panel panel-body">
+                <!-- <ul class="post-list">
+                    <li><a href="/{{ post.author}}/{{ post.slug }}">{{ post.title }}</a></li>
+                    <hr>
+                </ul> -->
+                {{ post.body | truncatechars:40}}
+            </div>
+            {% endfor %}
+        </div>
+        <!-- 分页 -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if post_list.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ post_list.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ post_list.number }} of {{ post_list.paginator.num_pages }}.
+                </span>
+
+                {% if post_list.has_next %}
+                <a href="?page={{ post_list.next_page_number }}">next</a>
+                <a href="?page={{ post_list.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+
+            </span>
+        </div>
+        <!-- 提交表单 -->
+        <p>
+            <textarea id='comment'></textarea>
+        </p>
+	<form action="/form/" method="POST">
+		{% if error_message %}<div class="errormessage">{{ error_message }}</div>{% endif %}
+            {% csrf_token %}
+            <div>
+                <label class="formlabel poet_title">poet_title</label>
+                <input class="poet_title" type="text" name="title" required>
+            </div>
+            <div>            
+                <label class="formlabel poet_author">poet_author</label>
+                <input class="poet_author" type="text" name="author" required> 
+            </div>
+            <div>
+                <label class="formlabel poet_body">poet_body</label>
+                <textarea class="poet_body" rows="15" cols="50" name="body" required></textarea>
+            </div>
+            <input type="submit">
+        </form>
+    </div>
+    <!-- ajax填充诗歌原文 -->
+    <div class="col-sm-2 col-md-2">
+        <div class="panel panel-default">
+            <div class="panel panel-heading">
+                <div id="ajaxhead">
+
+                </div>
+            </div>
+            <div class="panel panel-body">
+                <div id="ajaxbody">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 右侧边栏 -->
+    <div class="col-sm-1 col-md-1">
+        <div class="panel panel-default">
+            <div class="panel panel-heading">
+                <h3> 侧边栏heading </h3>
+            </div>
+            <div class="panel panel-body">
+                <div class="list-group">
+                    <a href="/" class="list-group-item">侧边栏1st</a>
+                    <a href="www.jandan.net" class="list-group-item">侧边栏2nd</a>
+                    <a href="www.baidu.com" class="list-group-item">侧边栏3rd</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,13 @@
+{% extends 'base_template.html' %}
+{% block content %}
+{% load markdown_deux_tags %}
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            {{ post }}
+            {{ post.body | markdown}}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

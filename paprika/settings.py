@@ -25,14 +25,18 @@ SECRET_KEY = 't97gd4p5n-dbst!!9s%6@%qga&(_sd-$0=vawx61q!qm+wle6)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [#'104.194.68.59',
-        'www.paprika0214.icu','paprika0214.icu']
+# !!git push之前修改
+ALLOWED_HOSTS = ['138.128.212.61',
+     'www.paprika0214.icu','paprika0214.icu']
 
+
+#ALLOWED_HOSTS = ['192.168.0.103', '127.0.0.1']
 
 # Application definition
 
 INSTALLED_APPS = [
     'mipha',
+    'markdown_deux',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,8 +83,9 @@ WSGI_APPLICATION = 'paprika.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': os.path.join(BASE_DIR, 'db.mipha'),
-        'NAME': 'miphapost',
+        #'NAME': os.path.join(BASE_DIR, 'db.mipha'),
+        #!!修改 'NAME': 'miphapost',
+        'NAME': 'django_mipha',
         'HOST': 'localhost',
         'PORT': '3306',
         'USER': 'root',

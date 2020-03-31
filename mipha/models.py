@@ -15,10 +15,14 @@ from django.utils import timezone
 # 要么新添加的字段要有default数据，要么统一设置为null
 class Post(models.Model):
     title = models.CharField(max_length=200)
-    author = models.CharField(max_length=200)
-    slug = models.CharField(max_length=200) # 文章网址
+    #author = models.CharField(max_length=200)
+    #slug = models.CharField(max_length=200) # 文章网址
     body = models.TextField()
     pub_date = models.DateTimeField(default=timezone.now)
+    author = models.CharField(max_length=100)
+    mail = models.EmailField(blank=True)
+    visible = models.BooleanField(default=True)
+    ip_addr = models.TextField()
 
     # class Meta 内的设置则要指定文章显示的顺序是以pub_date为依据
     class Meta:

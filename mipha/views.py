@@ -4,15 +4,19 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Post
 from django.template import loader
 from django.views import generic
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
+import markdown
 
-'''
+
 # index函数用来获取所有文章，获取到post_lists里面并通过HTTPResponse输出到客户端页面中
 def index(request):
-    posts = Post.objects.all()
+    #post_list = Post.objects.all()
     #post_lists = list()
     #template = loader.get_template('mipha/index.html')
-    context = {'posts': posts}
-
+    posts = Post.objects.all()
+    paginator = Paginator(posts, 20)
+    post_list = paginator.page(1)
+    context = {'post_list': post_list}
     # 硬编码。最好把html和python代码区分开来，使用render函数
     # for count, post in enumerate(posts):
     #     # post_lists.append("No.{}:".format(str(count)) + str(post) + "<br>")
@@ -23,19 +27,68 @@ def index(request):
 
     # render函数 (request, 模板路径 templates/mipha/index.html, 要传递的参数)
     # return render(request, 'mipha/index.html', context)
+    return render(request, 'mipha/mainpage.html', {'post_list': post_list})
+    #return render(request, 'mipha/backupmain.html', context)
+
+
+def page_view(request, page):
+    posts = Post.objects.all()
+    paginator = Paginator(posts, 20)  # 每页5个对象
+    try:
+        post_list = paginator.page(page)  # 获取第几页的内容
+    except InvalidPage:
+        post_list = paginator.page(1)
+    context = {'post_list': post_list}
     return render(request, 'mipha/mainpage.html', context)
-'''
 
 
-class IndexView(generic.ListView):
-    model = Post
-    # 继承自ListView, 所以自动生成的变量是  post_list
-    # 如果需要修改，通过 context_object_name 属性
-    template_name = 'mipha/mainpage.html'
+def post_view(request, page_num):
+    post = get_object_or_404(Post, id=page_num)
+    # post.body = markdown.markdown(post.body,
+    #                               extentions=[
+    #                                   'markdown.extensions.extra',
+    #                                   'markdown.extensions.codehilite',
+    #                                   'markdown.extensions.toc',
+    #                               ])
+    return render(request, 'mipha/post.html', {'post': post})
 
-    def get_queryset(self):
-        # 应该是用来读取数据库的函数
-        return Post.objects.order_by('-pub_date')
+
+def comment_form(request):
+    try:
+        # 如果值为空就报错
+        post_author = request.POST.get('author')
+        post_email =request.POST.get('email')
+        post_body = request.POST.get('body')
+        ip = request.META.get('REMOTE_ADDR')
+        print(ip)
+    except KeyError:
+        # 错误信息，返回提交页面，并且输出一个错误信息
+        return render(request, 'mipha/mainpage.html', {
+            'error_message': '这是一个错误信息：空值'
+        })
+    else:
+        Post.objects.create(
+            author=post_author,
+            mail=post_email,
+            body=post_body,
+            ip_addr=ip)
+    return HttpResponseRedirect(
+        reverse('mipha:index'), {'message': 'content'})
+# class IndexView(generic.ListView):
+#     model = Post
+#     # 继承自ListView, 所以自动生成的变量是  post_list
+#     # 如果需要修改，通过 context_object_name 属性
+#     template_name = 'mipha/mainpage.html'
+#     context_object_name = 'post_list'
+#
+#     def get_queryset(self):
+#         # 应该是用来读取数据库的函数
+#         posts = Post.objects.order_by('-pub_date')
+#         paginator = Paginator(posts, 5)
+#
+#         #page = self.get('page')
+#         #return Post.objects.order_by('-pub_date')
+#         return paginator.get_page(1)
 
 
 # 定义链接应该返回的数据
@@ -48,7 +101,7 @@ class IndexView(generic.ListView):
 #     poets = get_list_or_404(Post, author=author)
 #     context = {'author': author, 'poets': poets}
 #     return render(request, 'mipha/author_filter.html', context)
-
+'''
 class AuthorPoetsView(generic.ListView):
     model = Post
     template_name = 'mipha/author_filter.html'
@@ -129,3 +182,4 @@ def formtest(request):
             args=(
                 poet_author,
             )))
+'''

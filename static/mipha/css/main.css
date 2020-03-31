@@ -1,0 +1,85 @@
+.navbar-brand img {
+    height: 40px;
+}
+
+.navbar {
+    background-color: rgb(103, 136, 152);
+}
+
+a {
+    color: rgb(103, 136, 152);
+}
+
+.navbar>.container-fluid .navbar-brand {
+    padding: 5px;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: white;
+}
+.navbar-default .navbar-nav>li>a:hover {
+    color: #fff;
+    background-color: rgb(103, 136, 152);
+}
+
+ol {
+    list-style: none;
+}
+
+.date {
+    color: gray;
+}
+
+.title {
+    padding: 15px 20px;
+}
+.title a {
+    display: block;
+}
+.list-group-item:hover {
+    background-color: rgb(238, 238, 238);
+}
+.disabled {
+    cursor: not-allowed;
+}
+
+.row {
+    padding: 10px;
+}
+.author {
+    padding-top: 10px;
+    float: left;
+    width: 18%;
+    margin-right: 2%;
+    line-height: 1.5em;
+}
+.text {
+    width: 80%;
+    float: left;
+    padding: 10px;
+    overflow: hidden;
+}
+.text img{
+    border: 0 none;
+    max-width: 100%;
+    max-height: 500px;
+}
+.textright {
+    float: right;
+}
+.input-group {
+    height: 200px;
+    margin-top: 30px;
+}
+#submit {
+    margin-top: 30px;
+    background-color: rgb(103, 136, 152);
+}
+
+.page-item.active .page-link  {
+    background-color: rgb(103, 136, 152);
+    border-color: rgb(103, 136, 152);
+}
+.pagination {
+    margin-top: 15px;
+}
