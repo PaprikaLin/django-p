@@ -1,8 +1,8 @@
 {% extends 'base_template.html' %}
 {% load markdown_deux_tags %}
-{% block css%}
+{% block css %}
 {% load static %}
-<link href="{% static 'mipha/css/main.css' %}" rel="stylesheet">
+<link href="{% static 'mipha/css/mobile.css' %}" rel="stylesheet">
 {% endblock %}
     {% block content %}
     <!-- 内容 -->
@@ -20,15 +20,15 @@
                     <!-- <a href="/post/{{ post.pub_date | date:'Y' }}/{{ post.pub_date | date:'m' }}/{{ post.pub_date | date:'d' }}/{{ post.title }}"></a> -->
                     <div class="content">
                         <div class="row">
-                            <div class="author">
-                                <span>{{ post.author }}</span>
-                                <br>
-                                <span class="date">{{ post.pub_date | date:"Y年m月d日"}}</span>
-                            </div>
                             <div class="text">
-                                <span class="textright">
-                                    <a href="p/{{ post.id }}">{{ post.id }}</a>
-                                </span>
+                                <div class="author">
+                                    <span>{{ post.author }}</span>
+                                    <span class="date">{{ post.pub_date | date:"Y年m月d日"}}</span>
+                                    <span class="textright">
+                                        <a href="p/{{ post.id }}">{{ post.id }}</a>
+                                    </span>
+                                </div>
+                                <hr>
                                 <div class="text-body">
                                 {{ post.body | markdown}}
                                 </div>
@@ -111,7 +111,7 @@
                 <div class="form-group row">
                     <label for="email" class="col-sm-2 col-form-label">邮箱</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="emailinput" name="email" placeholder="输入邮箱" required>
+                        <input type="email" class="form-control" id="emailinput" name="email" placeholder="输入邮箱(可选)">
                 </div>
                 <div class="input-group">
                     <textarea class="form-control" aria-label="With textarea" name="body" required></textarea>

@@ -8,7 +8,7 @@ from .models import Post
 # 自定义Post的显示方式，把其他字段也显示进去
 # 继承自admin.ModelAdmin
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'pub_date')
+    list_display = ('body', 'pub_date', 'author', 'visible', 'ip_addr', 'mail', 'id')
 
 
 # 把新的类也注册进去

@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, reverse, redirect
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 # Create your views here.
-from .models import Post
+from .models import Post, Likes_record
 from django.template import loader
 from django.views import generic
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
 import markdown
-
+from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ObjectDoesNotExist
 
 # index函数用来获取所有文章，获取到post_lists里面并通过HTTPResponse输出到客户端页面中
 def index(request):
@@ -27,6 +28,12 @@ def index(request):
 
     # render函数 (request, 模板路径 templates/mipha/index.html, 要传递的参数)
     # return render(request, 'mipha/index.html', context)
+    print(request.environ.get('HTTP_USER_AGENT'))
+    a = request.environ.get('HTTP_USER_AGENT')
+    if ('Mobile' in a) or ('iPhone' in a) or ('Android' in a):
+        print('return mobile')
+        return render(request, 'mipha/mobile_index.html', {'post_list': post_list})
+
     return render(request, 'mipha/mainpage.html', {'post_list': post_list})
     #return render(request, 'mipha/backupmain.html', context)
 
@@ -74,6 +81,52 @@ def comment_form(request):
             ip_addr=ip)
     return HttpResponseRedirect(
         reverse('mipha:index'), {'message': 'content'})
+
+
+def mobile_index(request):
+    posts = Post.objects.all()
+    paginator = Paginator(posts, 20)
+    post_list = paginator.page(1)
+    context = {'post_list': post_list}
+    a = request.environ.get('HTTP_USER_AGENT')
+    if 'mobile' or 'iPhone' in a:
+        print('mobile')
+    return render(request, 'mipha/mobile_index.html', {'post_list': post_list})
+
+@csrf_exempt
+def increase_like_or_unlike(request):
+    # 获取POST过来的信息，在做js的时候要跟这里接口对上
+    post_id = request.POST.get('post_id')
+    comment_type = request.POST.get('comment_type')
+    userip = request.META.get('REMOTE_ADDR')
+    post = Post.objects.get(id=post_id)
+    res = {'status':0, 'msg':''}
+    try:
+        new_like = Likes_record.objects.get(post_id=post_id, user=userip)
+        res['msg'] = '您已经投过票了'
+    except ObjectDoesNotExist:
+        if comment_type == '1':
+            post.likes += 1
+            post.save()
+            Likes_record.objects.create(
+                post_id=post_id,
+                comment_type=1,
+                user=userip,)
+            res['status'] = 1
+            res['msg'] = post.likes
+            return JsonResponse(res)
+        else:
+            post.unlikes += 1
+            post.save()
+            Likes_record.objects.create(
+                post_id=post_id,
+                comment_type=0,
+                user=userip,)
+            res['status'] = 1
+            res['msg'] = post.unlikes
+        return JsonResponse(res)
+    return JsonResponse(res)
+
 # class IndexView(generic.ListView):
 #     model = Post
 #     # 继承自ListView, 所以自动生成的变量是  post_list

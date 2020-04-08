@@ -6,7 +6,7 @@
     background-color: rgb(103, 136, 152);
 }
 
-a {
+.textright a {
     color: rgb(103, 136, 152);
 }
 
@@ -28,15 +28,14 @@ ol {
 
 .date {
     color: gray;
+    margin-left: 20px;
 }
+
 .title {
     padding: .1rem 1.25rem;
 }
-.list-group-item:hover {
-    background-color: rgb(238, 238, 238);
-}
-.disabled {
-    cursor: not-allowed;
+.vote {
+    text-align: right;
 }
 .comment-like {
     color: red;
@@ -44,21 +43,21 @@ ol {
 .comment-unlike {
     color: blue;
 }
+.list-group-item:hover {
+    background-color: rgb(238, 238, 238);
+}
+.disabled {
+    cursor: not-allowed;
+}
 
 .row {
-    padding: 10px;
+    /* padding: 10px; */
 }
-.author {
-    padding-top: 10px;
-    float: left;
-    width: 18%;
-    margin-right: 2%;
-    line-height: 1.5em;
-}
+
 .text {
-    width: 80%;
+    width: 100%;
     float: left;
-    padding: 10px 10px 0px 10px;
+    /* padding: 10px; */
     overflow: hidden;
 }
 .text img{
@@ -100,15 +99,4 @@ hr {
     padding: 10px 20px;
     text-align: center;
     border-radius: 2px;
-}
-.vote {
-    text-align: right;
-}
-.like-container a:hover {
-    color: red;
-    text-decoration: none;
-}
-.unlike-container a:hover {
-    color: blue;
-    text-decoration: none;
 }

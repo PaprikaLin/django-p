@@ -26,8 +26,7 @@ SECRET_KEY = 't97gd4p5n-dbst!!9s%6@%qga&(_sd-$0=vawx61q!qm+wle6)'
 DEBUG = True
 
 # !!git push之前修改
-ALLOWED_HOSTS = ['138.128.212.61',
-     'www.paprika0214.icu','paprika0214.icu']
+ALLOWED_HOSTS = ['www.paprika0214.icu', 'paprika0214.icu']
 
 
 #ALLOWED_HOSTS = ['192.168.0.103', '127.0.0.1']
@@ -132,7 +131,7 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 #STATIC_ROOT = '/home/mysite/django-p/django-env/lib/python3.7/site-packages/django/contrib/admin/static/'
-STATIC_ROOT = '/home/mysite/django-p/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
+STATIC_ROOT = '/website/django-p/static/'
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, "static"),
+# )

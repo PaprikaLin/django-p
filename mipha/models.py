@@ -14,15 +14,15 @@ from django.utils import timezone
 # 注意如果有数据之后就比较难再更改
 # 要么新添加的字段要有default数据，要么统一设置为null
 class Post(models.Model):
-    title = models.CharField(max_length=200)
-    #author = models.CharField(max_length=200)
-    #slug = models.CharField(max_length=200) # 文章网址
+    #title = models.CharField(max_length=200)
     body = models.TextField()
     pub_date = models.DateTimeField(default=timezone.now)
     author = models.CharField(max_length=100)
     mail = models.EmailField(blank=True)
     visible = models.BooleanField(default=True)
     ip_addr = models.TextField()
+    likes = models.PositiveIntegerField(default=0)
+    unlikes = models.PositiveIntegerField(default=0)
 
     # class Meta 内的设置则要指定文章显示的顺序是以pub_date为依据
     class Meta:
@@ -31,7 +31,14 @@ class Post(models.Model):
     # 作用跟__str__一样，在cmd界面显示标题，用unicode是因为可以正确显示中文
     # 还是需要 __str__ 才能正常显示
     def __unicode__(self):
-        return self.title
+        return self.body
 
     def __str__(self):
-        return self.title
+        return self.body
+
+
+class Likes_record(models.Model):
+    post_id = models.IntegerField()
+    comment_type = models.BooleanField()
+    user = models.CharField(max_length=50)
+    pub_date = models.DateTimeField(default=timezone.now)

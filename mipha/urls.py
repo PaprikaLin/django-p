@@ -17,6 +17,9 @@ urlpatterns = [
     path('page/<str:page>', views.page_view, name='page'),
     #path('', views.IndexView.as_view(), name='index'),
     path('form/', views.comment_form, name='comment_form'),
+    path('m/', views.mobile_index, name='mobile_index'),
+    path('api/comment', views.increase_like_or_unlike, name='increase_like_or_unlike'),
+    path('m/api/comment', views.increase_like_or_unlike, name='increase_like_or_unlike'),
     # 定义访问不同的地址返回不同的模板，
     #path('<str:author>/', views.AuthorPoetsView.as_view(), name='author_poets'),
     # re_path(r'^author/(\w+)$', views.author_poets, name='author_poets')
