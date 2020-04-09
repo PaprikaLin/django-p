@@ -88,7 +88,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
         'USER': 'root',
-        'PASSWORD': '901231',
+        'PASSWORD': 'Mysql901231+',
     }
 }
 
@@ -130,7 +130,6 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATIC_ROOT = '/home/mysite/django-p/django-env/lib/python3.7/site-packages/django/contrib/admin/static/'
 STATIC_ROOT = '/website/django-p/static/'
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, "static"),

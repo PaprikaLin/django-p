@@ -70,7 +70,7 @@ ol {
     float: right;
 }
 .input-group {
-    height: 200px;
+    /* height: 200px; */
     margin-top: 30px;
 }
 #submit {
@@ -111,4 +111,18 @@ hr {
 .unlike-container a:hover {
     color: blue;
     text-decoration: none;
+}
+#upload_pic {
+    margin: 0 20px;
+}
+.input-group {
+    height: auto;
+    padding: 10px;
+    margin: 0px;
+}
+#textbody {
+    height: 200px;
+}
+.custom-file-label::after {
+    content: "选择"
 }

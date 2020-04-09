@@ -8,6 +8,9 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, Invali
 import markdown
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
+import requests
+from mipha import test
+import io
 
 # index函数用来获取所有文章，获取到post_lists里面并通过HTTPResponse输出到客户端页面中
 def index(request):
@@ -126,6 +129,39 @@ def increase_like_or_unlike(request):
             res['msg'] = post.unlikes
         return JsonResponse(res)
     return JsonResponse(res)
+
+
+def updates_page(request):
+    return render(request, 'mipha/updatelog.html')
+
+@csrf_exempt
+def upload(request):
+    file = request.FILES.get('f1').file.getvalue()
+    # print(file)
+    # print(type(file))
+    # f1 = io.BufferedReader(file)
+    # print(f1)
+    # print(type(f1))
+    # f2 = open('static/mipha/images/cat.jpg', 'rb')
+    # print(f2)
+    # print(type(f2))
+    with open('static/mipha/images/temp.jpg', 'wb') as f:
+        f.write(file)
+    f1 = {'file': open('static/mipha/images/temp.jpg', 'rb')}
+    url = 'https://pic.suo.dog/api/tc.php?type=1688&echo=imgurl'
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
+        'Referer': 'https://pic.suo.dog/'
+    }
+    res = requests.post(url, headers=headers, files=f1)
+    print(res)
+    print(res.status_code)
+    print(res.text)
+    print(res.content)
+    # r = test.r(f)
+    # print(r)
+    return HttpResponse(res.text)
+
 
 # class IndexView(generic.ListView):
 #     model = Post

@@ -20,6 +20,9 @@ urlpatterns = [
     path('m/', views.mobile_index, name='mobile_index'),
     path('api/comment', views.increase_like_or_unlike, name='increase_like_or_unlike'),
     path('m/api/comment', views.increase_like_or_unlike, name='increase_like_or_unlike'),
+    path('updates/', views.updates_page, name='updates_page'),
+    path('upload/', views.upload, name='upload'),
+    path('m/upload/', views.upload, name='upload'),
     # 定义访问不同的地址返回不同的模板，
     #path('<str:author>/', views.AuthorPoetsView.as_view(), name='author_poets'),
     # re_path(r'^author/(\w+)$', views.author_poets, name='author_poets')

@@ -18,7 +18,7 @@ class Post(models.Model):
     body = models.TextField()
     pub_date = models.DateTimeField(default=timezone.now)
     author = models.CharField(max_length=100)
-    mail = models.EmailField(blank=True)
+    mail = models.EmailField(blank=True, null=True)
     visible = models.BooleanField(default=True)
     ip_addr = models.TextField()
     likes = models.PositiveIntegerField(default=0)

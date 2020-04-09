@@ -1,6 +1,6 @@
 {% extends 'base_template.html' %}
 {% load markdown_deux_tags %}
-{% block css%}
+{% block css %}
 {% load static %}
 <link href="{% static 'mipha/css/main.css' %}" rel="stylesheet">
 {% endblock %}
@@ -30,7 +30,7 @@
                                     <a href="p/{{ post.id }}">{{ post.id }}</a>
                                 </span>
                                 <div class="text-body">
-                                {{ post.body | markdown}}
+                                {{ post.body | markdown | linebreaksbr }}
                                 </div>
                                 <div class="vote">
                                     <span class="like-container">
@@ -50,81 +50,13 @@
                 {% endif %}
             {% endfor %}
             </ol>
+        
 
             <!-- 分页 -->
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                {% if post_list.has_previous %}
-                <li class="page-item">
-                <a href="/page/{{ post_list.previous_page_number }}" aria-label="Previous" class="page-link">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-                </li>
-                <li class="page-item">
-                    <a href="/page/{{ post_list.previous_page_number }}" class="page-link">{{ post_list.previous_page_number }}</a>
-                </li>
-                {% else %}
-                <li class="page-item disabled">
-                <a href="#" aria-label="Previous" class="page-link">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-                </li>
-                {% endif %}
-
-
-                <li class="page-item active"><a href="#" class="page-link">{{ post_list.number }}</a></li>
-
-
-                {% if post_list.has_next %}
-                <li class="page-item">
-                    <a href="/page/{{ post_list.next_page_number }}" class="page-link">{{ post_list.next_page_number }}</a>
-                </li>
-                <li class="page-item">
-                <a href="/page/{{ post_list.next_page_number }}" aria-label="Previous" class="page-link">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-                </li>
-                {% else %}
-                <li class="page-item disabled">
-                <a href="#" aria-label="Previous" class="page-link">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-                </li>
-                {% endif %}
-            </ul>
-        </nav>
-            
-            <hr>
-            <div class="commentheader">
-                <h3>发表评论</h3>
-            </div>
-
-            <form action="/form/" id="commentform" method="post">
-                {% if error_message %}<div class="errormessage">{{ error_message }}</div>{% endif %}
-                {% csrf_token %}
-                <div class="form-group row">
-                    <label for="author" class="col-sm-2 col-form-label">用户名</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="authorinput" name="author" placeholder="输入用户名" required>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="email" class="col-sm-2 col-form-label">邮箱</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" id="emailinput" name="email" placeholder="输入邮箱" required>
-                </div>
-                <div class="input-group">
-                    <textarea class="form-control" aria-label="With textarea" name="body" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-secondary btn-lg btn-block" id="submit">提交</button>
-            </form>
-
-      </div>
+            {% include 'mipha/pagination.html' %}
+            <!-- 评论 -->
+            {% include 'mipha/comment_form.html' %}
+        </div>
     </div>
     <div class="msg">您已经投过票了</div>
-
-      
-    
-
-
 {% endblock %}
