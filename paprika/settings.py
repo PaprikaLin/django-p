@@ -26,15 +26,45 @@ SECRET_KEY = 't97gd4p5n-dbst!!9s%6@%qga&(_sd-$0=vawx61q!qm+wle6)'
 DEBUG = True
 
 # !!git push之前修改
-ALLOWED_HOSTS = ['www.paprika0214.icu', 'paprika0214.icu']
+#ALLOWED_HOSTS = ['www.paprika0214.icu', 'paprika0214.icu']
 
 
-#ALLOWED_HOSTS = ['192.168.0.103', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.0.103', '127.0.0.1']
 
 # Application definition
 
+# 自定义ckeditor的配置
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'width': 'auto',
+#         'height': '250px',
+#         # tab键转换空格数
+#         'tabSpaces': 4,
+#         # 工具栏风格
+#         'toolbar': 'Custom',
+#         # 工具栏按钮
+#         'toolbar_Custom': [
+#             # 表情 代码块
+#             ['Smiley', 'CodeSnippet'],
+#             # 字体风格
+#             ['Bold', 'Italic', 'Underline', 'RemoveFormat', 'Blockquote'],
+#             # 字体颜色
+#             ['TextColor', 'BGColor'],
+#             # 链接
+#             ['Link', 'Unlink'],
+#             # 列表
+#             ['NumberedList', 'BulletedList'],
+#             # 最大化
+#             ['Maximize'],
+#         ],
+#      # 代码块插件
+#      'extraPlugins': ','.join(['codesnippet']),
+#     }
+# }
+
 INSTALLED_APPS = [
     'mipha',
+    #'ckeditor',
     'markdown_deux',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -130,7 +160,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/website/django-p/static/'
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, "static"),
-# )
+# STATIC_ROOT = '/website/django-p/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)

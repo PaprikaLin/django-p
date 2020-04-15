@@ -7,6 +7,8 @@
 from django.db import models
 #from django.contrib.auth.models import User
 from django.utils import timezone
+#from ckeditor.fields import RichTextField
+
 # Create your models here.
 
 
@@ -20,7 +22,7 @@ class Post(models.Model):
     author = models.CharField(max_length=100)
     mail = models.EmailField(blank=True, null=True)
     visible = models.BooleanField(default=True)
-    ip_addr = models.TextField()
+    ip_addr = models.CharField(max_length=50)
     likes = models.PositiveIntegerField(default=0)
     unlikes = models.PositiveIntegerField(default=0)
 
@@ -42,3 +44,23 @@ class Likes_record(models.Model):
     comment_type = models.BooleanField()
     user = models.CharField(max_length=50)
     pub_date = models.DateTimeField(default=timezone.now)
+
+
+class Comment(models.Model):
+    #post_id = models.ForeignKey('Post', on_delete=models.CASCADE)
+    post_id = models.CharField(max_length=100)
+    author = models.CharField(max_length=100)
+    mail = models.EmailField(blank=True, null=True)
+    content = models.TextField()
+    pub_date = models.DateTimeField(default=timezone.now)
+    ipaddr = models.CharField(max_length=50, null=True)
+
+    class Meta:
+        ordering = ('pub_date', )
+
+
+class Visitor_record(models.Model):
+    ipaddr = models.CharField(max_length=50)
+    user_agent = models.CharField(max_length=200)
+    referer = models.CharField(max_length=50, null=True)
+    date = models.DateTimeField(default=timezone.now)

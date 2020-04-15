@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, reverse, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 # Create your views here.
-from .models import Post, Likes_record
+from .models import Post, Likes_record, Comment, Visitor_record
 from django.template import loader
 from django.views import generic
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
@@ -9,33 +9,24 @@ import markdown
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 import requests
-from mipha import test
+from django.utils import timezone
 import io
 
 # index函数用来获取所有文章，获取到post_lists里面并通过HTTPResponse输出到客户端页面中
 def index(request):
-    #post_list = Post.objects.all()
-    #post_lists = list()
-    #template = loader.get_template('mipha/index.html')
+    print(timezone.now().date())
+    print(request.session.items())
     posts = Post.objects.all()
     paginator = Paginator(posts, 20)
     post_list = paginator.page(1)
     context = {'post_list': post_list}
-    # 硬编码。最好把html和python代码区分开来，使用render函数
-    # for count, post in enumerate(posts):
-    #     # post_lists.append("No.{}:".format(str(count)) + str(post) + "<br>")
-    #     post_lists.append("No.{}: {} {} {} <br>".format(str(count), str(post.author), str(post), str(post.pub_date)))
-    # return HttpResponse(post_lists)
-    # return render(posts, 'template/index.html')
 
-
-    # render函数 (request, 模板路径 templates/mipha/index.html, 要传递的参数)
-    # return render(request, 'mipha/index.html', context)
     print(request.environ.get('HTTP_USER_AGENT'))
     a = request.environ.get('HTTP_USER_AGENT')
     if ('Mobile' in a) or ('iPhone' in a) or ('Android' in a):
         print('return mobile')
-        return render(request, 'mipha/mobile_index.html', {'post_list': post_list})
+        #return render(request, 'mipha/mobile_index.html', {'post_list': post_list})
+        return HttpResponseRedirect(reverse('mipha:mobile_index'), {'post_list': post_list})
 
     return render(request, 'mipha/mainpage.html', {'post_list': post_list})
     #return render(request, 'mipha/backupmain.html', context)
@@ -64,10 +55,13 @@ def post_view(request, page_num):
 
 
 def comment_form(request):
+    if request.META.get('REQUEST_METHOD') == 'GET':
+        return HttpResponse('Method Not Allowed')
     try:
         # 如果值为空就报错
         post_author = request.POST.get('author')
         post_email =request.POST.get('email')
+        print(post_email)
         post_body = request.POST.get('body')
         ip = request.META.get('REMOTE_ADDR')
         print(ip)
@@ -82,6 +76,7 @@ def comment_form(request):
             mail=post_email,
             body=post_body,
             ip_addr=ip)
+    visitor_record(request)
     return HttpResponseRedirect(
         reverse('mipha:index'), {'message': 'content'})
 
@@ -136,15 +131,9 @@ def updates_page(request):
 
 @csrf_exempt
 def upload(request):
+    print(request.POST)
     file = request.FILES.get('f1').file.getvalue()
-    # print(file)
-    # print(type(file))
-    # f1 = io.BufferedReader(file)
-    # print(f1)
-    # print(type(f1))
-    # f2 = open('static/mipha/images/cat.jpg', 'rb')
-    # print(f2)
-    # print(type(f2))
+
     with open('static/mipha/images/temp.jpg', 'wb') as f:
         f.write(file)
     f1 = {'file': open('static/mipha/images/temp.jpg', 'rb')}
@@ -154,14 +143,90 @@ def upload(request):
         'Referer': 'https://pic.suo.dog/'
     }
     res = requests.post(url, headers=headers, files=f1)
-    print(res)
-    print(res.status_code)
-    print(res.text)
-    print(res.content)
-    # r = test.r(f)
-    # print(r)
+    visitor_record(request)
     return HttpResponse(res.text)
 
+
+
+@csrf_exempt
+def api_upload(request):
+
+    di = {
+        'author': request.POST.get('author'),
+        'email': request.POST.get('email'),
+        'content': request.POST.get('content'),
+    }
+
+    with open('D:/test.jpg', 'wb') as f:
+        f.write(bytes(request.POST.get('content'), encoding='utf-8'))
+    d = {}
+    d['file'] = open('D:/test.jpg', 'rb')
+    url = 'https://pic.suo.dog/api/tc.php?type=1688&echo=imgurl'
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
+        'Referer': 'https://pic.suo.dog/'
+    }
+    res = requests.post(url, headers=headers, files=d)
+    visitor_record(request)
+    return HttpResponse(res.text)
+
+
+
+@csrf_exempt
+def new_comment(request):
+    if request.META.get('REQUEST_METHOD') == 'GET':
+        return HttpResponse('Method Not Allowed')
+    try:
+        author = request.POST.get('author')
+        post_id = request.POST.get('post_id')
+        email = request.POST.get('email')
+        content = request.POST.get('content')
+        ipaddr = request.META.get('REMOTE_ADDR')
+        print(author, post_id, email, content)
+    except:
+        return HttpResponse('unknown error')
+    Comment.objects.create(
+        post_id=post_id,
+        author=author,
+        mail=email,
+        content=content,
+        ipaddr = ipaddr,
+    )
+    res = {'status': 1, 'author': author, 'post_id': post_id, 'email': email, 'content': content, 'date': timezone.now().strftime('%Y-%m-%d %H:%M:%S')}
+    visitor_record(request)
+    return JsonResponse(res)
+
+
+def get_comment(request, post_id):
+    postid = Comment.objects.filter(post_id=post_id)
+    comments = {}
+    for n, p in enumerate(postid):
+        comments[str(n)] = {
+            'comment_date': p.pub_date.strftime('%Y-%m-%d %H:%M:%S'),
+            'comment_content': p.content,
+            'comment_post_id': p.post_id,
+            'comment_author': p.author
+        }
+    data = {'code': 0,
+            'comments': comments,
+            }
+    print(data)
+    return JsonResponse(data)
+
+
+
+
+def visitor_record(request):
+    m = request.META
+    ip = m.get('REMOTE_ADDR')
+    agent = m.get('HTTP_USER_AGENT')
+    refer = m.get('HTTP_REFERER')
+    Visitor_record.objects.create(
+        ipaddr=ip,
+        user_agent=agent,
+        referer=refer
+    )
+    return None
 
 # class IndexView(generic.ListView):
 #     model = Post

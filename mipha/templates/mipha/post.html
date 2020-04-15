@@ -1,11 +1,14 @@
 {% extends 'base_template.html' %}
 {% block content %}
 {% load markdown_deux_tags %}
+{% block css %}
+{% load static %}
+<link href="{% static 'mipha/css/update_page.css' %}" rel="stylesheet">
+{% endblock %}
 <div class="container">
     <div class="row">
         <div class="col-md">
-            {{ post }}
-            {{ post.body | markdown}}
+            {{ post.body | markdown | linebreaksbr}}
         </div>
     </div>
 </div>

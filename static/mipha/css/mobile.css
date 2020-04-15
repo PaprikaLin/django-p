@@ -32,7 +32,7 @@ ol {
 }
 
 .title {
-    padding: .1rem 1.25rem;
+    /* padding: .1rem 1.25rem; */
 }
 .vote {
     text-align: right;
@@ -51,7 +51,7 @@ ol {
 }
 
 .row {
-    /* padding: 10px; */
+    padding: 10px;
 }
 
 .text {
@@ -99,6 +99,7 @@ hr {
     padding: 10px 20px;
     text-align: center;
     border-radius: 2px;
+    z-index: 1;
 }
 #upload_pic {
     margin: 0 20px;
@@ -113,4 +114,41 @@ hr {
 }
 .custom-file-label::after {
     content: "选择"
+}
+.comment-list {
+    padding: 5px;
+    border-bottom: 0;
+}
+.comment-list-row {
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    font-size: 15px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.comment-content {
+    padding: 10px;
+}
+.comment-author-container {
+    padding: 3px 10px;
+}
+.comment-container {
+    border: 1px solid rgba(0,0,0,.125);
+}
+.comment-author {
+    font-weight: bold;
+}
+.comment-date {
+    float: right;
+}
+/* .comment-floor {
+    float: right;
+} */
+#comment-textbody {
+    height: 200px;
+}
+.comment-btn {
+    cursor: pointer;
+}
+.list-group-item {
+    padding: 0.5rem 0.5rem;
 }

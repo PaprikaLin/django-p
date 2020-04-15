@@ -26,6 +26,7 @@
                                     <span class="date">{{ post.pub_date | date:"Y年m月d日"}}</span>
                                     <span class="textright">
                                         <a href="p/{{ post.id }}">{{ post.id }}</a>
+                                        <!-- <a href="{% url 'mipha:post' post.id %}">{{ post.id }}</a> -->
                                     </span>
                                 </div>
                                 <hr>
@@ -40,6 +41,9 @@
                                     <span class="unlike-container">
                                         <a title="叉叉/反对" href="javascript:;" class="comment-unlike" data-id="{{ post.id }}">XX</a>
                                         [<span id="unlike-result">{{ post.unlikes }}</span>]
+                                    </span>
+                                    <span class='comment-btn' data-id="{{ post.id }}">
+                                        评论区
                                     </span>
                                 </div>
                             </div>
@@ -57,5 +61,5 @@
             {% include 'mipha/comment_form.html' %}
       </div>
     </div>
-    <div class="msg">您已经投过票了</div>
+    <div class="msg" style="margin-left: -49px; margin-top: -12.5px; display: none;">您已经投过票了</div>
 {% endblock %}

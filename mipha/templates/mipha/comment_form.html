@@ -16,15 +16,8 @@
         <label for="email" class="col-sm-2 col-form-label">邮箱</label>
         <div class="col-sm-10">
             <input type="email" class="form-control" id="emailinput" name="email" placeholder="输入邮箱(可选)"> -->
-            <div class="input-group mb-3">
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="inputGroupFile02" accept="image/*">
-                  <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">选择</label>
-                </div>
-                <div class="input-group-append">
-                  <span class="input-group-text" id="inputGroupFileAddon02">上传</span>
-                </div>
-              </div>
+            {% include 'mipha/upload_extend.html' %}
+            
     <div class="input-group">
         <textarea id='textbody' class="form-control" aria-label="With textarea" name="body" required placeholder="上传文件后会自动在文本框生成图片链接"></textarea>
     </div>

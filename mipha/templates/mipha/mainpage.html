@@ -16,7 +16,7 @@
             <ol class="list-group">
             {% for post in post_list %}
                 {% if post.visible %}
-                <li class="list-group-item title">
+                <li class="list-group-item title" id="comment-{{ post.id }}">
                     <!-- <a href="/post/{{ post.pub_date | date:'Y' }}/{{ post.pub_date | date:'m' }}/{{ post.pub_date | date:'d' }}/{{ post.title }}"></a> -->
                     <div class="content">
                         <div class="row">
@@ -41,10 +41,13 @@
                                         <a title="叉叉/反对" href="javascript:;" class="comment-unlike" data-id="{{ post.id }}">XX</a>
                                         [<span id="unlike-result">{{ post.unlikes }}</span>]
                                     </span>
+                                    <span class='comment-btn' data-id="{{ post.id }}">
+                                        评论区
+                                    </span>
                                 </div>
                             </div>
                         </div>
-
+                        
                     </div>
                 </li>
                 {% endif %}
@@ -59,4 +62,6 @@
         </div>
     </div>
     <div class="msg">您已经投过票了</div>
+    <script>var post = "{{ post_list }}"</script>
+    
 {% endblock %}
