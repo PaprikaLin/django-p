@@ -22,7 +22,7 @@ $('.comment-like').click(function() {
     // console.log(document.domain)
     var data_id = $(this).attr('data-id')
     var result
-    $.post('api/comment', {'post_id': data_id, 'comment_type': 1}, function(result) {
+    $.post('/api/comment', {'post_id': data_id, 'comment_type': 1}, function(result) {
         // console.log(result)
         // console.log(this)
         // console.log($('[data-id=' + data_id + ']').filter('.comment-like'))
@@ -42,7 +42,7 @@ $('.comment-unlike').click(function() {
     // console.log(document.domain)
     var data_id = $(this).attr('data-id')
     var result
-    $.post('api/comment', {'post_id': data_id, 'comment_type': 0}, function(result) {
+    $.post('/api/comment', {'post_id': data_id, 'comment_type': 0}, function(result) {
         // console.log(result)
         // console.log(this)
         // console.log($('[data-id=' + data_id + ']').filter('.comment-like'))
@@ -98,8 +98,8 @@ $('#inputGroupFileAddon02').click(function(){
         var file = $('#inputGroupFile02')[0].files[0];
         to_kb = file.size / 1024;
         limit = to_kb / 1024;
-        if (limit > 3) {
-            alert('文件尺寸大于3MB')
+        if (limit > 5) {
+            alert('文件尺寸大于5MB')
             return
         }
         $('.custom-file-label').html("上传中。请稍候")
@@ -107,7 +107,7 @@ $('#inputGroupFileAddon02').click(function(){
         fd.append('f1', file);
         $.ajax({
             type: 'POST',
-            url: 'upload/',
+            url: '/upload/',
             data: fd,
             contentType:false,
             processData:false,
@@ -139,6 +139,7 @@ $(document).ready(function(){
 })
 
 $('.comment-btn').click(function(){
+    var comment_btn = $(this)
     var postid = $(this).data('id');
     var container = $('#comment-container-' + postid);
     console.log(container)
@@ -229,6 +230,10 @@ $('.comment-btn').click(function(){
                     com_li.append(li_author_div)
                     com_li.append(li_content_div)
                     ol.append(com_li)
+                    var c = comment_btn.html()[4];
+                    c = parseInt(c);
+                    c += 1;
+                    comment_btn.html('评论区['+ c + ']')
                 }
             })
             t.prop("disabled", true);

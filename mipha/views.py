@@ -10,18 +10,18 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 import requests
 from django.utils import timezone
-import io
+import json
 
 # index函数用来获取所有文章，获取到post_lists里面并通过HTTPResponse输出到客户端页面中
 def index(request):
-    print(timezone.now().date())
-    print(request.session.items())
+    visitor_record(request)
+    print(request.META)
     posts = Post.objects.all()
     paginator = Paginator(posts, 20)
     post_list = paginator.page(1)
     context = {'post_list': post_list}
 
-    print(request.environ.get('HTTP_USER_AGENT'))
+    visitor_record(request)
     a = request.environ.get('HTTP_USER_AGENT')
     if ('Mobile' in a) or ('iPhone' in a) or ('Android' in a):
         print('return mobile')
@@ -33,6 +33,7 @@ def index(request):
 
 
 def page_view(request, page):
+    print(request.META)
     posts = Post.objects.all()
     paginator = Paginator(posts, 20)  # 每页5个对象
     try:
@@ -45,12 +46,7 @@ def page_view(request, page):
 
 def post_view(request, page_num):
     post = get_object_or_404(Post, id=page_num)
-    # post.body = markdown.markdown(post.body,
-    #                               extentions=[
-    #                                   'markdown.extensions.extra',
-    #                                   'markdown.extensions.codehilite',
-    #                                   'markdown.extensions.toc',
-    #                               ])
+    visitor_record(request)
     return render(request, 'mipha/post.html', {'post': post})
 
 
@@ -78,7 +74,7 @@ def comment_form(request):
             ip_addr=ip)
     visitor_record(request)
     return HttpResponseRedirect(
-        reverse('mipha:index'), {'message': 'content'})
+        reverse('mipha:index'), {'message': 'success'})
 
 
 def mobile_index(request):
@@ -86,14 +82,12 @@ def mobile_index(request):
     paginator = Paginator(posts, 20)
     post_list = paginator.page(1)
     context = {'post_list': post_list}
-    a = request.environ.get('HTTP_USER_AGENT')
-    if 'mobile' or 'iPhone' in a:
-        print('mobile')
     return render(request, 'mipha/mobile_index.html', {'post_list': post_list})
 
 @csrf_exempt
 def increase_like_or_unlike(request):
     # 获取POST过来的信息，在做js的时候要跟这里接口对上
+    visitor_record(request)
     post_id = request.POST.get('post_id')
     comment_type = request.POST.get('comment_type')
     userip = request.META.get('REMOTE_ADDR')
@@ -131,25 +125,23 @@ def updates_page(request):
 
 @csrf_exempt
 def upload(request):
-    print(request.POST)
+    if request.META.get('REQUEST_METHOD') == 'GET':
+        return HttpResponse('Method Not Allowed')
     file = request.FILES.get('f1').file.getvalue()
+    print(len(file))
+    if int(len(file)) / 1024 > 5000:
+        return HttpResponse('图片大于5MB')
 
-    with open('static/mipha/images/temp.jpg', 'wb') as f:
-        f.write(file)
-    f1 = {'file': open('static/mipha/images/temp.jpg', 'rb')}
-    url = 'https://pic.suo.dog/api/tc.php?type=1688&echo=imgurl'
-    headers = {
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
-        'Referer': 'https://pic.suo.dog/'
-    }
-    res = requests.post(url, headers=headers, files=f1)
+    res = make_pic_link(file)
     visitor_record(request)
-    return HttpResponse(res.text)
+    return HttpResponse(res)
 
 
 
 @csrf_exempt
 def api_upload(request):
+    if request.META.get('REQUEST_METHOD') == 'GET':
+        return HttpResponse('Method Not Allowed')
 
     di = {
         'author': request.POST.get('author'),
@@ -157,18 +149,14 @@ def api_upload(request):
         'content': request.POST.get('content'),
     }
 
-    with open('D:/test.jpg', 'wb') as f:
-        f.write(bytes(request.POST.get('content'), encoding='utf-8'))
-    d = {}
-    d['file'] = open('D:/test.jpg', 'rb')
-    url = 'https://pic.suo.dog/api/tc.php?type=1688&echo=imgurl'
-    headers = {
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
-        'Referer': 'https://pic.suo.dog/'
-    }
-    res = requests.post(url, headers=headers, files=d)
-    visitor_record(request)
-    return HttpResponse(res.text)
+    print('上传结果', di['content'])
+    Post.objects.create(
+        author=di['author'],
+        mail=di['email'],
+        body='![]({})'.format(di['content']),
+        ip_addr='bot'
+    )
+    return HttpResponse('finished')
 
 
 
@@ -221,12 +209,54 @@ def visitor_record(request):
     ip = m.get('REMOTE_ADDR')
     agent = m.get('HTTP_USER_AGENT')
     refer = m.get('HTTP_REFERER')
+    path = m.get('PATH_INFO')
     Visitor_record.objects.create(
         ipaddr=ip,
         user_agent=agent,
-        referer=refer
+        referer=refer,
+        path=path
     )
     return None
+
+
+def make_pic_link(binary):
+    target_bed = 'https://sm.ms/api/v2/upload?inajax=1'
+
+    # ext = url.split('.')[-1]
+    # temp_file = 'd:/temp.' + ext
+    # temp_file = 'static/mipha/images/temp.' + ext
+
+    # get_pic_header = {
+    #     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
+    # }
+    # pic_content = requests.get(url, headers=get_pic_header)
+    # pic_size = int(pic_content.headers.get('Content-Length')) / 1024
+    # if pic_size > 5000:
+    #     return '图片大于5MB'
+
+    # with open(temp_file, 'wb') as f:
+    #     f.write(pic_content.content)
+
+    post_pic_header = {
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
+        'referer': 'https://sm.ms/'
+    }
+    f = {'smfile': binary}
+    res = requests.post(target_bed, files=f, headers=post_pic_header)
+    j = json.loads(res.text)
+    print(j)
+
+    suc = j.get('code')
+    if suc == 'success':
+        content = j.get('data').get('url')
+        return content
+    else:
+        print(j.get('message'))
+        return j.get('message')
+
+
+
+
 
 # class IndexView(generic.ListView):
 #     model = Post

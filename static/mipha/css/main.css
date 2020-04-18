@@ -123,6 +123,7 @@ hr {
 }
 #textbody {
     height: 200px;
+    background-color: #eaecee;
 }
 .custom-file-label::after {
     content: "选择"
@@ -160,4 +161,7 @@ hr {
 }
 .comment-btn {
     cursor: pointer;
+}
+input {
+    background-color: #eaecee;
 }

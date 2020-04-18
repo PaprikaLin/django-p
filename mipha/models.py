@@ -30,6 +30,9 @@ class Post(models.Model):
     class Meta:
         ordering = ('-pub_date', )
 
+    def get_comment_count(self):
+        return Comment.objects.filter(post_id=self.id).count()
+
     # 作用跟__str__一样，在cmd界面显示标题，用unicode是因为可以正确显示中文
     # 还是需要 __str__ 才能正常显示
     def __unicode__(self):
@@ -64,3 +67,4 @@ class Visitor_record(models.Model):
     user_agent = models.CharField(max_length=200)
     referer = models.CharField(max_length=50, null=True)
     date = models.DateTimeField(default=timezone.now)
+    path = models.CharField(max_length=100)
