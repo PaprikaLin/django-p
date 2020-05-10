@@ -140,14 +140,23 @@ $(document).ready(function(){
 
 $('.comment-btn').click(function(){
     var comment_btn = $(this)
+    var htxt = $(this).html();
+    if (htxt.indexOf('收起') == -1) {
+        $(this).html('收起' + htxt)
+    } else {
+        console.log('测试'+htxt)
+        console.log(htxt.substring(2))
+        $(this).html(htxt.substring(2))
+    }
     var postid = $(this).data('id');
     var container = $('#comment-container-' + postid);
     console.log(container)
     if (container.attr('style') == 'display: block;') {
-        console.log('yes')
+
         container.css('display', 'none');
     } else if (container.attr('style') == 'display: none;'){
         container.css('display', 'block');
+
     } else {
         // 画出评论框
         var li = $(this).closest('li');

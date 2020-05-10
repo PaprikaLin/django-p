@@ -25,6 +25,7 @@ class Post(models.Model):
     ip_addr = models.CharField(max_length=50)
     likes = models.PositiveIntegerField(default=0)
     unlikes = models.PositiveIntegerField(default=0)
+    type = models.PositiveIntegerField(default=1)
 
     # class Meta 内的设置则要指定文章显示的顺序是以pub_date为依据
     class Meta:

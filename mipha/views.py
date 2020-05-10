@@ -119,6 +119,20 @@ def increase_like_or_unlike(request):
         return JsonResponse(res)
     return JsonResponse(res)
 
+def magic_realism(request):
+    posts = Post.objects.filter(type=2)
+    paginator = Paginator(posts, 20)
+    post_list = paginator.page(1)
+    context = {'post_list': post_list}
+    return render(request, 'mipha/mainpage.html', context)
+
+def positive_energy(request):
+    posts = Post.objects.filter(type=3)
+    paginator = Paginator(posts, 20)
+    post_list = paginator.page(1)
+    context = {'post_list': post_list}
+    return render(request, 'mipha/mainpage.html', context)
+
 
 def updates_page(request):
     return render(request, 'mipha/updatelog.html')
@@ -220,26 +234,9 @@ def visitor_record(request):
 
 
 def make_pic_link(binary):
-    target_bed = 'https://sm.ms/api/v2/upload?inajax=1'
-
-    # ext = url.split('.')[-1]
-    # temp_file = 'd:/temp.' + ext
-    # temp_file = 'static/mipha/images/temp.' + ext
-
-    # get_pic_header = {
-    #     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
-    # }
-    # pic_content = requests.get(url, headers=get_pic_header)
-    # pic_size = int(pic_content.headers.get('Content-Length')) / 1024
-    # if pic_size > 5000:
-    #     return '图片大于5MB'
-
-    # with open(temp_file, 'wb') as f:
-    #     f.write(pic_content.content)
-
+    target_bed = 'https://sm.ms/api/v2/upload'
     post_pic_header = {
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
-        'referer': 'https://sm.ms/'
+        'Authorization': 'IkHgwkwNogdv8n5UpDrBoScsQ5FRXrrA'
     }
     f = {'smfile': binary}
     res = requests.post(target_bed, files=f, headers=post_pic_header)
