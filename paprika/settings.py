@@ -28,10 +28,10 @@ SECRET_KEY = sk
 DEBUG = True
 
 # !!git push之前修改
-ALLOWED_HOSTS = ['www.paprika0214.icu', 'paprika0214.icu']
+#ALLOWED_HOSTS = ['www.paprika0214.icu', 'paprika0214.icu']
 
 
-#ALLOWED_HOSTS = ['192.168.0.105', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.0.105', '127.0.0.1']
 
 # Application definition
 
@@ -162,7 +162,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/website/django-p/static/'
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, "static"),
-# )
+#STATIC_ROOT = '/website/django-p/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)

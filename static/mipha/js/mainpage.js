@@ -240,9 +240,7 @@ $('.comment-btn').click(function(){
                     com_li.append(li_content_div)
                     ol.append(com_li)
                     var c = comment_btn.html();
-                    console.log(c)
                     c = parseInt(c.replace(/[^\d]/g,''))
-                    console.log(c)
                     c += 1;
                     comment_btn.html('收起评论区['+ c + ']')
                 }

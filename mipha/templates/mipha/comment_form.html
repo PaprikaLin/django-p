@@ -1,27 +1,25 @@
 <hr>
-<div class="comment-part">
-    <div class="commentheader">
-        <h3>发表评论</h3>
-    </div>
-
-    <form action="/form/" method="POST" id="commentform">
-        {% if error_message %}<div class="errormessage">{{ error_message }}</div>{% endif %}
-        {% csrf_token %}
-        <div class="form-group row">
-            <label for="author" class="col-sm-2 col-form-label">用户名</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="authorinput" name="author" placeholder="输入用户名" required>
-            </div>
-        </div>
-        <!-- <div class="form-group row">
-            <label for="email" class="col-sm-2 col-form-label">邮箱</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" id="emailinput" name="email" placeholder="输入邮箱(可选)"> -->
-                {% include 'mipha/upload_extend.html' %}
-                
-        <div class="input-group">
-            <textarea id='textbody' class="form-control" aria-label="With textarea" name="body" required placeholder="上传文件后会自动在文本框生成图片链接"></textarea>
-        </div>
-        <button type="submit" class="btn btn-secondary btn-lg btn-block" id="submit">提交</button>
-    </form>
+<div class="commentheader">
+    <h3>发表评论</h3>
 </div>
+
+<form action="/form/" method="POST" id="commentform">
+    {% if error_message %}<div class="errormessage">{{ error_message }}</div>{% endif %}
+    {% csrf_token %}
+    <div class="form-group row">
+        <label for="author" class="col-sm-2 col-form-label">用户名</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="authorinput" name="author" placeholder="输入用户名" required>
+        </div>
+    </div>
+    <!-- <div class="form-group row">
+        <label for="email" class="col-sm-2 col-form-label">邮箱</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" id="emailinput" name="email" placeholder="输入邮箱(可选)"> -->
+            {% include 'mipha/upload_extend.html' %}
+            
+    <div class="input-group">
+        <textarea id='textbody' class="form-control" aria-label="With textarea" name="body" required placeholder="上传文件后会自动在文本框生成图片链接"></textarea>
+    </div>
+    <button type="submit" class="btn btn-secondary btn-lg btn-block" id="submit">提交</button>
+</form>
