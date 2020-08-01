@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, reverse, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 # Create your views here.
-from .models import Post, Likes_record, Comment, Visitor_record
+from .models import Post, Likes_record, Comment, Visitor_record, Blog
 from django.template import loader
 from django.views import generic
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
@@ -52,7 +52,7 @@ def post_view(request, page_num):
 
 def comment_form(request):
     if request.META.get('REQUEST_METHOD') == 'GET':
-        return HttpResponse('Method Not Allowed')
+        return HttpResponse('Method Not Allowed') #这个方法我不接受
     try:
         # 如果值为空就报错
         post_author = request.POST.get('author')
@@ -67,6 +67,11 @@ def comment_form(request):
             'error_message': '这是一个错误信息：空值'
         })
     else:
+        # 非中国IP将被拒绝提交
+        country = test_ip(ip)
+        if country != 'China':
+            return HttpResponse('Rejected')
+
         Post.objects.create(
             author=post_author,
             mail=post_email,
@@ -252,6 +257,26 @@ def make_pic_link(binary):
         return j.get('message')
 
 
+def blog(request):
+    blogs = Blog.objects.all()
+    return render(request, 'mipha/blog.html', {'blogs': blogs})
+
+
+# 测试IP地址
+def test_ip(ip):
+    url = 'http://ip-api.com/batch'
+    headers = {
+        "Content-Type": "application/json",
+        "Host": "ip-api.com",
+        "Connection": "Keep-Alive",
+        "Accept-Encoding": "gzip",
+        "User-Agent": "okhttp/3.2.0",
+    }
+    data = [{'query': ip ,'lang': 'zh'}]
+    res = requests.post(url, json=data, headers=headers)
+    j = json.loads(res.text)[0]
+    country = j.get('country')
+    return country
 
 
 

@@ -13,3 +13,4 @@ django-env/
 [Command Line]
 *.log
 uwsgi_params
+/paprika/keys.py

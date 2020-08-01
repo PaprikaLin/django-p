@@ -1,0 +1,38 @@
+.accordion-wrapper {
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.time {
+    float: right;
+    color: gray;
+    font-size: 1.2rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.card-header h2 {
+    display: inline;
+}
+
+.author-mark {
+    font-size: .8rem;
+    position: absolute;
+    top: 2rem;
+    right: 1.5rem;
+    color: gray;
+}
+
+.card-header a {
+    display: block;
+}
+.blog-title:hover {
+    text-decoration: none;
+}
+.blog-title {
+    font-size: 1.2rem;
+    color: rgb(103, 136, 152);
+    font-family: Arial, Helvetica, sans-serif;
+}
+.collapse {
+    font-family: Arial, Helvetica, sans-serif;
+}

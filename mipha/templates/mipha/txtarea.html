@@ -1,0 +1,92 @@
+<div class="col-lg-12 nopadding">
+    <textarea id="txtEditor" style="display: none;"></textarea>
+    <div class="row-fluid Editor-container">
+        <div id="menuBarDiv" class="row-fluid">
+            <div class="txt-btn-group">
+                <div class="txt-btn-group" title="Fonts" style="cursor: pointer;">
+                    <a class="txt-btn txt-btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" title="Fonts">Font<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a tabindex="-1" href="javascript:void(0)">Sans serif</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Serif</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Wide</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Narrow</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Comic Sans MS</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Courier New</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Garamond</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Georgia</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Tahoma</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Trebuchet MS</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Verdana</a></li>
+                    </ul>
+                </div>
+                <div class="txt-btn-group" title="Paragraph Format" style="cursor: pointer;">
+                    <a class="txt-btn txt-btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" title="Paragraph Format">Formatting<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a tabindex="-1" href="javascript:void(0)">Heading 1</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Heading 2</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Heading 3</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Heading 4</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Heading 5</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Heading 6</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Paragraph</a></li>
+                    </ul>
+                </div>
+                <div class="txt-btn-group" title="Font Size" style="cursor: pointer;">
+                    <a class="txt-btn txt-btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" title="Font Size">Font size<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a tabindex="-1" href="javascript:void(0)">Small</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Normal</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Medium</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Large</a></li>
+                        <li><a tabindex="-1" href="javascript:void(0)">Huge</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="txt-btn-group">
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Bold" style="cursor: pointer;"><i class="fa fa-bold"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Italics" style="cursor: pointer;"><i class="fa fa-italic"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Underline" style="cursor: pointer;"><i class="fa fa-underline"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Text/Background Color" style="cursor: pointer;"><i class="fa fa-font"></i></a>
+            </div>
+            <div class="txt-btn-group">
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Align Left" style="cursor: pointer;"><i class="fa fa-align-left"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Align Center" style="cursor: pointer;"><i class="fa fa-align-center"></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Align Right" style="cursor: pointer;"><i class="fa fa-align-right"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Justify" style="cursor: pointer;"><i class="fa fa-align-justify"></i></a>
+            </div>
+            <div class="txt-btn-group">
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Increase Indent" style="cursor: pointer;"><i class="fa fa-indent"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Decrease Indent" style="cursor: pointer;"><i class="fa fa-outdent"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Block Quote" style="cursor: pointer;"><i class="fa fa-quote-right"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Insert/Remove Numbered List" style="cursor: pointer;"><i class="fa fa-list-ol"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Insert/Remove Bulleted List" style="cursor: pointer;"><i class="fa fa-list-ul"></i></a>
+            </div>
+            <div class="txt-btn-group">
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Undo" style="cursor: pointer;"><i class="fa fa-undo"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Redo" style="cursor: pointer;"><i class="fa fa-repeat"></i></a>
+            </div>
+            <div class="txt-btn-group">
+                <a href="#InsertLink" role="button" class="txt-btn txt-btn-default" data-toggle="modal" title="Insert Link"><i class="fa fa-link"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Unlink" style="cursor: pointer;"><i class="fa fa-unlink"></i></a>
+                <a href="#InsertImage" role="button" class="txt-btn txt-btn-default" data-toggle="modal" title="Insert Image"><i class="fa fa-picture-o"></i></a>
+                <a href="#InsertTable" role="button" class="txt-btn txt-btn-default" data-toggle="modal" title="Insert Table"><i class="fa fa-table"></i></a>
+            </div>
+            <div class="txt-btn-group">
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Strike Through" style="cursor: pointer;"><i class="fa fa-strikethrough"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Horizontal Rule" style="cursor: pointer;"><i class="fa fa-minus"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Insert Special Character" style="cursor: pointer;"><i class="fa fa-asterisk"></i></a>
+            </div>
+            <div class="txt-btn-group">
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Print" style="cursor: pointer;"><i class="fa fa-print"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Remove Formatting" style="cursor: pointer;"><i class="fa fa-eraser"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Select All" style="cursor: pointer;"><i class="fa fa-file-text"></i></a>
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Source" style="cursor: pointer;"><i class="fa fa-code"></i></a>
+            </div>
+            <div class="txt-btn-group">
+                <a href="javascript:void(0)" class="txt-btn txt-btn-default" title="Toggle Screen" style="cursor: pointer;"><i class="fa fa-arrows-alt"></i></a>
+            </div>
+        </div>
+        <div class="Editor-editor" contenteditable="true" style="overflow: auto;"></div>
+        <div id="statusbar" class="row-fluid" unselectable="on"></div>
+    </div>
+</div>

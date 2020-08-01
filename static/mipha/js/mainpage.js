@@ -239,10 +239,12 @@ $('.comment-btn').click(function(){
                     com_li.append(li_author_div)
                     com_li.append(li_content_div)
                     ol.append(com_li)
-                    var c = comment_btn.html()[4];
-                    c = parseInt(c);
+                    var c = comment_btn.html();
+                    console.log(c)
+                    c = parseInt(c.replace(/[^\d]/g,''))
+                    console.log(c)
                     c += 1;
-                    comment_btn.html('评论区['+ c + ']')
+                    comment_btn.html('收起评论区['+ c + ']')
                 }
             })
             t.prop("disabled", true);
@@ -265,3 +267,10 @@ $('.comment-btn').click(function(){
     // }
 })
 
+
+
+// 显示顶部评论框的按钮
+$('#show-comment').click(function(){
+    $('.comment-top').css('display', 'block');
+    $('#show-comment').css('display', 'none');
+})

@@ -28,7 +28,8 @@ urlpatterns = [
     path('api/newcomment', views.new_comment, name='new_comment'),
     path('api/getcomment/<int:post_id>', views.get_comment, name='get_comment'),
     path('magicrealism/', views.magic_realism, name='magic_realism'),
-    path('positiveenergy', views.positive_energy, name='positive_energy')
+    path('positiveenergy', views.positive_energy, name='positive_energy'),
+    path('blog/', views.blog, name='blog'),
     # 定义访问不同的地址返回不同的模板，
     #path('<str:author>/', views.AuthorPoetsView.as_view(), name='author_poets'),
     # re_path(r'^author/(\w+)$', views.author_poets, name='author_poets')

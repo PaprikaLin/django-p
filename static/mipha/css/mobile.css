@@ -21,6 +21,15 @@
     color: #fff;
     background-color: rgb(103, 136, 152);
 }
+.nav-link {
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+
+}
+.nav-link:hover {
+    color: rgb(212, 212, 212);
+}
 
 ol {
     list-style: none;

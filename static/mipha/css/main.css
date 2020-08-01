@@ -23,9 +23,8 @@ a {
 }
 .nav-link {
     color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-
+    font-family: Microsoft Yahei, Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
 }
 .nav-link:hover {
     color: rgb(212, 212, 212);
@@ -173,4 +172,13 @@ hr {
 }
 input {
     background-color: #eaecee;
+}
+.comment-top {
+    margin-bottom: 10px;
+    width: 100%;
+    display: none;
+}
+#show-comment {
+    margin:30px 45%;
+    width: 200px;
 }

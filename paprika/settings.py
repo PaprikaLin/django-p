@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from paprika.keys import SECRET_KEY as sk
+from paprika.keys import PASSWORD as ps
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 't97gd4p5n-dbst!!9s%6@%qga&(_sd-$0=vawx61q!qm+wle6)'
+SECRET_KEY = sk
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -29,7 +31,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['www.paprika0214.icu', 'paprika0214.icu']
 
 
-#ALLOWED_HOSTS = ['192.168.0.103', '127.0.0.1']
+#ALLOWED_HOSTS = ['192.168.0.105', '127.0.0.1']
 
 # Application definition
 
@@ -64,7 +66,7 @@ ALLOWED_HOSTS = ['www.paprika0214.icu', 'paprika0214.icu']
 
 INSTALLED_APPS = [
     'mipha',
-    #'ckeditor',
+    'ckeditor',
     'markdown_deux',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -113,12 +115,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         #'NAME': os.path.join(BASE_DIR, 'db.mipha'),
-        #!!修改 'NAME': 'miphapost',
+        #'NAME': 'miphapost',
         'NAME': 'django_mipha',
         'HOST': 'localhost',
         'PORT': '3306',
         'USER': 'root',
-        'PASSWORD': 'Mysql901231+',
+        'PASSWORD': ps,
     }
 }
 

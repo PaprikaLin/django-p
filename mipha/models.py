@@ -7,7 +7,7 @@
 from django.db import models
 #from django.contrib.auth.models import User
 from django.utils import timezone
-#from ckeditor.fields import RichTextField
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -69,3 +69,15 @@ class Visitor_record(models.Model):
     referer = models.CharField(max_length=50, null=True)
     date = models.DateTimeField(default=timezone.now)
     path = models.CharField(max_length=100)
+
+class Blog(models.Model):
+    blog_title = models.CharField(max_length=200)
+    author = models.CharField(max_length=50)
+    pub_date = models.DateTimeField(default=timezone.now)
+    body = RichTextField()
+    read = models.PositiveIntegerField(default=0)
+    likes = models.PositiveIntegerField(default=0)
+    unlikes = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ('pub_date', )

@@ -1,0 +1,44 @@
+{% extends 'base_template.html' %}
+{% load markdown_deux_tags %}
+{% block css %}
+{% load static %}
+<link href="{% static 'mipha/css/main.css' %}" rel="stylesheet">
+<link href="{% static 'mipha/css/blog.css' %}" rel="stylesheet">
+<link href="{% static 'mipha/css/editor.css' %}" rel="stylesheet">
+<script src="{% static 'mipha/js/editor.js' %}"></script>
+<script type="text/javascript">$(document).ready( function() {
+    $("#txtEditor").Editor();
+});
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <!-- {% include 'mipha/txtarea.html' %} -->
+    
+    <div class="accordion-wrapper">
+        <div class="accordion" id="accordionExample">
+            {% for blog in blogs %}
+            <div class="card">
+                <div class="card-header" id="heading{{ blog.id }}">
+                  <!-- <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ blog.id }}" aria-expanded="true" aria-controls="collapse{{ blog.id }}">
+                      {{ blog.blog_title}}
+                    </button>
+                  </h2> -->
+                    <a class="blog-title" data-toggle="collapse" href="#collapse{{ blog.id }}" role="button" aria-expanded="false" aria-controls="collapse{{ blog.id }}">{{ blog.blog_title }}<span class="time">{{ blog.pub_date | date:"y年m月d日"}}</span></a>
+                    
+                </div>
+            
+                <div id="collapse{{ blog.id }}" class="collapse" aria-labelledby="heading{{ blog.id }}">
+                  <div class="card-body">
+                      {{ blog.body | safe }}
+                  </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
