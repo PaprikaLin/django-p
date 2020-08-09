@@ -15,15 +15,15 @@
 {% block content %}
 
 <div class="container">
-
     
     <div class="accordion-wrapper">
         <div class="accordion" id="accordionExample">
             {% for blog in blogs %}
-
             <div class="card">
                 <div class="card-header" id="heading{{ blog.id }}">
-                    <a class="blog-title" data-toggle="collapse" href="#collapse{{ blog.id }}" role="button" aria-expanded="false" aria-controls="collapse{{ blog.id }}">{{ blog.blog_title }}<span class="time">{{ blog.pub_date | date:"y年m月d日"}}</span></a>
+                    <a class="blog-title" data-toggle="collapse" href="#collapse{{ blog.id }}" role="button" aria-expanded="false" aria-controls="collapse{{ blog.id }}">{{ blog.blog_title }}
+                        <span class="time">{{ blog.pub_date | date:"y年m月d日"}}</span>
+                    </a>
                     
                 </div>
             
@@ -33,7 +33,6 @@
                   </div>
                 </div>
             </div>
-
             {% endfor %}
         </div>
     </div>

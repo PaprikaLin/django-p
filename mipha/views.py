@@ -57,7 +57,6 @@ def comment_form(request):
         # 如果值为空就报错
         post_author = request.POST.get('author')
         post_email =request.POST.get('email')
-        print(post_email)
         post_body = request.POST.get('body')
         ip = request.META.get('REMOTE_ADDR')
         print(ip)
@@ -67,6 +66,7 @@ def comment_form(request):
             'error_message': '这是一个错误信息：空值'
         })
     else:
+        visitor_record(request)
         # 非中国IP将被拒绝提交
         country = test_ip(ip)
         if country != 'China':
@@ -77,7 +77,7 @@ def comment_form(request):
             mail=post_email,
             body=post_body,
             ip_addr=ip)
-    visitor_record(request)
+
     return HttpResponseRedirect(
         reverse('mipha:index'), {'message': 'success'})
 
@@ -258,8 +258,12 @@ def make_pic_link(binary):
 
 
 def blog(request):
-    blogs = Blog.objects.all()
+    blogs = Blog.objects.filter(private=0)
     return render(request, 'mipha/blog.html', {'blogs': blogs})
+
+def private(request):
+    blogs = Blog.objects.all()
+    return render(request, 'mipha/private.html', {'blogs': blogs})
 
 
 # 测试IP地址

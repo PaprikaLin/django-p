@@ -30,6 +30,7 @@ urlpatterns = [
     path('magicrealism/', views.magic_realism, name='magic_realism'),
     path('positiveenergy', views.positive_energy, name='positive_energy'),
     path('blog/', views.blog, name='blog'),
+    path('pvt/', views.private, name='private')
     # 定义访问不同的地址返回不同的模板，
     #path('<str:author>/', views.AuthorPoetsView.as_view(), name='author_poets'),
     # re_path(r'^author/(\w+)$', views.author_poets, name='author_poets')

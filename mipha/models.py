@@ -78,6 +78,7 @@ class Blog(models.Model):
     read = models.PositiveIntegerField(default=0)
     likes = models.PositiveIntegerField(default=0)
     unlikes = models.PositiveIntegerField(default=0)
+    private = models.BooleanField(default=0)
 
     class Meta:
-        ordering = ('pub_date', )
+        ordering = ('-pub_date', )
